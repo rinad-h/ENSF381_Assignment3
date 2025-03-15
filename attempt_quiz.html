@@ -5,8 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Attempt Quiz - LMS</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <script>
+        let timeLeft = 10 * 60; 
+        function startTimer() {
+            const timerElement = document.getElementById("timer");
+            const timerInterval = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    window.location.href = "leaderboard.html"; 
+                } else {
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+                    timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    timeLeft--;
+                }
+            }, 1000);
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            //validate question 1
+            const q1a = document.getElementById("q1a");
+            const q1b = document.getElementById("q1b");
+            if (q1a.checked) {
+                score += 50;
+            } else if (!q1a.checked && !q1b.checked) {
+                alert("Please answer Question 1.");
+                return;
+            }
+
+            //validate question 2
+            const q2a = document.getElementById("q2a");
+            const q2b = document.getElementById("q2b");
+            if (q2a.checked || q2b.checked) {
+                if (q2a.checked) score += 25;
+                if (q2b.checked) score += 25;
+            } else {
+                alert("Please answer Question 2.");
+                return;
+            }
+
+            
+            alert(`Your final score is: ${score}/100`);
+        }
+    </script>
 </head>
-<body>
+
+<body onload="startTimer()">
     <header>
         <img src="logo.jpg" alt="LMS Logo" style="width: 100px; height: 100px;">
         <h1>LMS - Learning Management System</h1>
@@ -26,7 +71,9 @@
             <p>Deadline: 11:59 PM, February 10, 2025</p>
             <p>Attempts Allowed: 1</p>
         </div>
-        
+
+        <div id="timer" style="font-size: 20px; color: red;">10:00</div>
+
         <h3>Question 1</h3>
         <p>What does HTML stand for?</p>
         <div class="Qs">
@@ -35,19 +82,18 @@
             <input type="radio" id="q1b" name="q1" value="Home Tool Markup Language">
             <label for="q1b">Home Tool Markup Language</label><br>
         </div>
-        <br>
-        <button class="ans">Submit Answer</button>
-        
+
         <h3>Question 2</h3>
         <p>Which of the following are HTML elements? (Select all that apply)</p>
         <div class="Qs">
-        <input type="checkbox" id="q2a" name="q2" value="<div>">
-        <label for="q2a">&lt;div&gt;</label><br>
-        <input type="checkbox" id="q2b" name="q2" value="<span>">
-        <label for="q2b">&lt;span&gt;</label><br>
+            <input type="checkbox" id="q2a" name="q2" value="<div>">
+            <label for="q2a">&lt;div&gt;</label><br>
+            <input type="checkbox" id="q2b" name="q2" value="<span>">
+            <label for="q2b">&lt;span&gt;</label><br>
         </div>
+
         <br>
-        <button class="ans">Submit Answer</button>
+        <button class="ans" onclick="submitQuiz()">Submit Answer</button>
         
         <br><br>
         <a href="leaderboard.html">

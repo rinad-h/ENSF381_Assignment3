@@ -27,10 +27,9 @@
         </select>
         
         <section class="Enrolled">
-			<!-- Courses in which the student is enrolled -->
-            <!-- Display Course 1, 2, and 3 in the same line -->
             <h2>Enrolled Courses</h2>
             <hr>
+            <table class="cv" id="enrolledCourses">
             <table class="cv">
 				<tr>
 					<td>
@@ -96,8 +95,8 @@
                             <img src="course2.jpg" alt="Course 2">
                             <p>Course Name: Data Science</p>
                             <p>Course Code: DS102</p>
-                            <button class="accept">Accept</button>
-                            <button class="decline">Decline</button>
+                            <button class="accept" onclick="acceptCourse(this)">Accept</button>
+                            <button class="decline" onclick="declineCourse(this)">Decline</button>
                         </div>
                     </td> 
                     <td>
@@ -105,8 +104,8 @@
                             <img src="course2.jpg" alt="Course 2">
                             <p>Course Name: Machine Learning</p>
                             <p>Course Code: ML105</p>
-                            <button class="accept">Accept</button>
-                            <button class="decline">Decline</button>
+                            <button class="accept" onclick="acceptCourse(this)">Accept</button>
+                            <button class="decline" onclick="declineCourse(this)">Decline</button>
                         </div>
                     </td> 
                 </tr>
@@ -116,5 +115,29 @@
     <footer>
         <p>&copy; 2025 LMS. All rights reserved.</p>
     </footer>
+    <script>
+        // Function to handle Accept button clicks not working to update style
+    function acceptCourse(button) {
+        var courseRow = button.parentNode.parentNode; // Get the table row (tr)
+        var enrolledTable = document.getElementById("enrolledCourses"); // Get enrolled courses section
+
+        if (enrolledTable) {
+            enrolledTable.appendChild(courseRow); // Move course to enrolled section
+            button.remove(); // Remove the accept button
+
+            var declineBtn = courseRow.getElementsByClassName("decline")[0];
+            if (declineBtn) {
+                declineBtn.remove(); // Remove the decline button
+            }
+        }
+    }
+
+    function declineCourse(button) {
+        var courseRow = button.parentNode.parentNode; // Get the table row (tr)
+        courseRow.parentNode.removeChild(courseRow); // Remove course from the list
+    }
+
+    </script>
+    
 </body>
 </html>
