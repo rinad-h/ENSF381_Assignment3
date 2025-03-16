@@ -33,8 +33,9 @@
             if (user){
                 if (user.email === password) {
                     document.getElementById("message").textContent = "Login successful! Redirecting...";
-                    window.location.href = "course_view.html";
-                    
+                    setTimeout(() => {
+                        window.location.href = "course_view.html";
+                    }, 2000);
                 }
                 else{
                 document.getElementById("message").textContent = "Invalid username or password!";
