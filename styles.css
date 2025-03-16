@@ -69,6 +69,12 @@ form {
     max-width: 100%;
 }
 
+#message {
+    border-style: solid;
+    padding-top: 10px;
+    padding-bottom: 10px
+}
+
 input[type="text"], input[type="password"] {
     width: 250px;
     padding: 10px;
