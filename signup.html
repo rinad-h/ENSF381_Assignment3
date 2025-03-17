@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup - LMS</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <header>
+        <img src="logo.jpg" alt="LMS Logo" style="width: 100px; height: 100px;">
+        <h1>LMS - Learning Management System</h1>
+    </header>
+    <div>
+        <nav>
+            <a href="index.html">Homepage</a>
+        </nav>
+    </div>
+    <main class="login">
+        <h2>Sign Up</h2>
+        <form id="signupForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br><br>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br>
+
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required><br>
+
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" required><br>
+
+        </form> 
+        <br>
+        <button type="button" onclick="validateForm()">Sign Up</button><br><br>
+
+        <div id="message"></div> 
+    </main>
+    <footer>
+        <p>&copy; 2025 LMS. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function validateForm() {
+            let errors = [];
+            let messageBox = document.getElementById('message');
+            messageBox.innerHTML = ''; 
+            // Username validation
+            let username = document.getElementById('username').value;
+            if (username.length < 3 || username.length > 20) {
+                errors.push("Invalid username (Username must be between 3 and 20 characters).");
+            }
+            if (username[0].match(/[^a-zA-Z]/)) {
+                errors.push("Invalid username (Username must start with a letter).");
+            }
+            if (/[^a-zA-Z0-9-_]/.test(username)) {
+                errors.push("Invalid username (Username can only contain letters, numbers, hyphens, and underscores).");
+            }
+
+            let password = document.getElementById('password').value;
+            if (password.length < 8) {
+                errors.push("Invalid password (Password must be at least 8 characters long).");
+            }
+            if (!password.match(/[A-Z]/) || !password.match(/[a-z]/) || !password.match(/[0-9]/)) {
+                errors.push("Invalid password (Password must contain at least one uppercase letter, one lowercase letter, and one number).");
+            }
+            if (password.includes(' ')) {
+                errors.push("Invalid password (Password cannot contain spaces).");
+            }
+
+            let confirmPassword = document.getElementById('confirmPassword').value;
+            if (confirmPassword !== password) {
+                errors.push("Invalid confirm password (Confirm password must match the password).");
+            }
+
+            let email = document.getElementById('email').value;
+            if (email.indexOf('@') === -1 || email.indexOf('.') === -1 || email.includes(' ')) {
+                errors.push("Invalid email (Please enter a valid email address).");
+            }
+
+            if (errors.length > 0) {
+                errors.forEach(function(error) {
+                    let p = document.createElement('p');
+                    p.textContent = error;
+                    messageBox.appendChild(p);
+                });
+            } else {
+                alert('Sign up successful!');
+                window.location.href = 'login.html'; 
+            }
+        }
+    </script>
+</body>
+</html>
