@@ -6,6 +6,17 @@
     <title>Course View - LMS</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
+<style>
+    /* Hover effect for course tiles */
+    div:hover {
+        background-color: #ffffff;
+        transition: background-color 0.3s;
+    }
+    table.cv td {
+        padding: 10px;
+        vertical-align: top;
+    }
+</style>
 <body>
     <header>
         <img src="logo.jpg" alt="LMS Logo" style="width: 100px; height: 100px;">
@@ -116,26 +127,40 @@
         <p>&copy; 2025 LMS. All rights reserved.</p>
     </footer>
     <script>
-        // Function to handle Accept button clicks not working to update style
+        
     function acceptCourse(button) {
-        var courseRow = button.parentNode.parentNode; // Get the table row (tr)
-        var enrolledTable = document.getElementById("enrolledCourses"); // Get enrolled courses section
+        var courseDiv = button.parentNode; 
+        var enrolledTable = document.getElementById("enrolledCourses");
 
-        if (enrolledTable) {
-            enrolledTable.appendChild(courseRow); // Move course to enrolled section
-            button.remove(); // Remove the accept button
+        var courseImage = courseDiv.getElementsByTagName("img")[0];
+        courseImage.src = "course1.jpg"; 
 
-            var declineBtn = courseRow.getElementsByClassName("decline")[0];
-            if (declineBtn) {
-                declineBtn.remove(); // Remove the decline button
-            }
+        button.remove();
+        var declineBtn = courseDiv.getElementsByClassName("decline")[0];
+        if (declineBtn) {
+            declineBtn.remove();
+        }
+
+        var newCell = document.createElement("td");
+        newCell.appendChild(courseDiv);
+
+        var rows = enrolledTable.getElementsByTagName("tr");
+        var lastRow = rows[rows.length - 1]; 
+
+        if (!lastRow || lastRow.children.length >= 3) {
+            var newRow = document.createElement("tr");
+            newRow.appendChild(newCell);
+            enrolledTable.appendChild(newRow);
+        } else {
+            lastRow.appendChild(newCell);
         }
     }
 
     function declineCourse(button) {
-        var courseRow = button.parentNode.parentNode; // Get the table row (tr)
-        courseRow.parentNode.removeChild(courseRow); // Remove course from the list
-    }
+            const courseTile = button.parentElement.parentElement;
+            courseTile.remove(); 
+        }
+
 
     </script>
     
