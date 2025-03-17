@@ -47,7 +47,7 @@ nav a:hover {
 }
 
 /* Main Content */
-main[class="login"], main[class="index"] {
+main[class="login"], main[class="index"], main[class="signup"] {
     padding: 20px;
     text-align: center;
     align-items: center;
@@ -69,7 +69,13 @@ form {
     max-width: 100%;
 }
 
-#message {
+.signup-form{
+    padding-top: 30px;
+    padding-bottom: 30px;
+
+}
+
+.error-message {
     border-style: solid;
     padding-top: 10px;
     padding-bottom: 10px

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up - LMS</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script>
+        function validate_signup() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const confirm_password = document.getElementById("confirm_password").value;
+            const email = document.getElementById("email").value;
+
+            const userMessage = document.getElementById("user_message");
+            const passMessage = document.getElementById("pass_message");
+            const confirmPassMessage = document.getElementById("confirm_pass_message");
+            const emailMessage = document.getElementById("email_message");      
+            
+            let valid_user = false;
+            let valid_pass = false;
+            let valid_confirm = false;
+            let valid_email = false;
+
+            // clear old messages
+            userMessage.textContent = "";
+            passMessage.textContent = "";
+            confirmPassMessage.textContent = "";
+            emailMessage.textContent = "";
+
+            // check username
+            const usernameRegex = /^[a-zA-Z0-9_-]+$/;
+            const letterRegex = /^[A-Za-z]/;
+            var user_len = username.length;
+            if (user_len <= 3 || user_len >= 20){
+                userMessage.textContent = "Username must be between 3 and 20 characters.";
+            }
+            else if (!usernameRegex.test(username)){
+                userMessage.textContent = "Username contains invalid characters.";
+            }
+            else if (!letterRegex.test(username)){
+                userMessage.textContent = "Username must start with a letter";
+            }
+            else{
+                valid_user = true;
+            }
+            
+            // check password
+            const passCharRegex = /(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()\-=+\[\]{}|;:'",.<>?/`~])/;
+            const specialCharRegex = /^[A-Za-z0-9!@#$%^&*()\-_=\+\[\]{}|;:'",.<>?/`~]+$/;
+            const spaceRegex = /\s/;
+
+            if (password.length < 8){
+                passMessage.textContent = "Password must be at least 8 characters."
+            }
+            else if (!passCharRegex.test(password)) {
+                passMessage.textContent = "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.";
+            }
+            else if (!specialCharRegex.test(password)) {
+                passMessage.textContent = "Password contains invalid special characters.";
+            }
+            else if (spaceRegex.test(password)) {
+                passMessage.textContent = "Password cannot contain spaces.";
+            }
+            else{
+                valid_pass = true;
+            }
+
+            // confirm password
+            if (password != confirm_password){
+                confirmPassMessage.textContent = "Passwords must match."
+            }
+            else{
+                valid_confirm = true;
+            }
+
+            // check email
+            const emailFormatRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+            if (!emailFormatRegex.test(email)) {
+                emailMessage.textContent = "Invalid email format. Must be in the form username@example.com.";
+            }
+            else if (spaceRegex.test(email)) {
+                emailMessage.textContent = "Email cannot contain spaces.";
+            }
+            else{
+                valid_email = true;
+            }
+
+            if (valid_user && valid_pass && valid_confirm && valid_email){
+                userMessage.textContent = "All the fields are acceptable. Redirecting..."
+                setTimeout(() => {
+                        window.location.href = "login.html";
+                    }, 2000);
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <img src="logo.jpg" alt="LMS Logo" style="width: 100px; height: 100px;">
+        <h1>LMS - Learning Management System</h1>
+    </header>
+    <div>
+        <nav>
+            <a href="index.html">Homepage</a>
+        </nav>
+    </div>
+    <main class="signup">
+        <h2>Sign Up</h2>
+        <form class="signup-form">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br>
+
+            <label for="password">Confirm Password:</label>
+            <input type="password" id="confirm_password" name="confirm_password" required><br>
+
+            <label for="username">Email:</label>
+            <input type="text" id="email" name="email" required><br>
+        </form> 
+        <br>
+        <br>  
+            <button onClick = "validate_signup()" >Signup</button>
+            <br><br>
+            <br>
+            <div class="error-message">
+                <p id="user_message"></p>
+                <p id="pass_message" ></p>
+                <p id="confirm_pass_message"></p>
+                <p id="email_message"></p>
+            </div>
+            
+    </main>
+    <footer>
+        <p>&copy; 2025 LMS. All rights reserved.</p>
+    </footer>
+</body>
+</html>
